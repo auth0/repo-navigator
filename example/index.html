@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Getting started with Auth0 - Auth0 Docs</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="https://auth0.com/boot/img/favicon.png">
+    <link href="//auth0.com/app.css" rel="stylesheet">
+    <link href="//docs.auth0.com/css/docs.css" rel="stylesheet">
+    <link href="/release/build.css" rel="stylesheet">
+    <script type="text/javascript" src="//use.typekit.net/iws6ohy.js"></script>
+    <script>
+      try{Typekit.load();}catch(e){}
+
+    </script><!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $.getJSON("https://rawgit.com/auth0/tutorial-navigator/master/component.json", function( data ) {
+          $("#styleguide-version").html(data.version);
+        });
+      })
+    </script>
+  </head>
+  <body class="page-docs">
+    <header class="site-header">
+      <nav role="navigation" class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" data-toggle="collapse" data-target="#navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            <h1 class="navbar-brand"><a href="/"><span>Auth0</span></a></h1>
+          </div>
+          <div id="navbar-collapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+              <li class="li-why"><a href="/why-auth0">Why Auth0</a></li>
+              <li class="li-how"><a href="/how-it-works">How It Works</a></li>
+              <li class="li-pricing"><a href="/pricing">Pricing</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="li-docs"><a href="https://docs.auth0.com">Documentation</a></li>
+              <li class="dropdown"><span role="button" data-toggle="dropdown" data-target="#" class="btn-dro">More<i class="icon-budicon-460"></i></span>
+                <ul role="menu" aria-labelledby="dLabel" class="dropdown-menu animated">
+                  <li><a href="/lock">Lock</a></li>
+                  <li><a href="/opensource">Open Source    </a></li>
+                  <li class="divider">             </li>
+                  <li><a href="/about">About</a></li>
+                  <li><a href="/customers">Customers</a></li>
+                  <li><a href="https://auth0.com/blog">Blog</a></li>
+                </ul>
+              </li>
+              <li><a href="javascript:login()" class="signin-button login">Login</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="sub-header"><span class="sub-header-text">Version <strong id="styleguide-version"></strong></span>
+        <ul class="external-links">
+          <li><a href="https://github.com/auth0/lock" target="_blank">View on Github</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-3">
+          <nav class="sidebar-docs">
+            <ul>
+              <li class="box-star box"><strong>Getting Started</strong>
+                <ul>
+                  <li class="selected"><a href="/"><i></i><span>Start here</span></a></li>
+                  <li class="apps-apis"><a href="/apps-apis"><i></i><span>Web Apps vs Web APIs</span></a></li>
+                </ul>
+              </li>
+              <li class="box-cogs box"><strong>API Reference</strong>
+                <ul>
+                  <li class="api"><a href="/api"><i></i><span>API</span></a></li>
+                  <li class="auth-api"><a href="/auth-api"><i></i><span>Authentication Endpoints</span></a></li>
+                </ul>
+              </li>
+              <li class="box-question-sign box"><strong>Help Topics</strong>
+                <ul>
+                  <li class="login-widget2"><a href="/login-widget2"><i></i><span>Login Widget</span></a></li>
+                  <li class="user-profile"><a href="/user-profile"><i></i><span>Normalized Profile</span></a></li>
+                  <li class="logout"><a href="/logout"><i></i><span>Logout</span></a></li>
+                  <li class="rules"><a href="/rules"><i></i><span>Rules</span></a></li>
+                  <li class="ttps">
+                    <!--github.com/auth0/rules
+                    a(href='https://github.com/auth0/rules')
+                      i
+                      span Rules Repository
+                    -->
+                  </li>
+                  <li class="ad"><a href="/ad"><i></i><span>Active Directory</span></a></li>
+                  <li class="mysql-connection-tutorial"><a href="/mysql-connection-tutorial"><i></i><span>Database Connections</span></a></li>
+                  <li class="protocols"><a href="/protocols"><i></i><span>Protocols</span></a></li>
+                  <li class="sequence-diagrams"><a href="/sequence-diagrams"><i></i><span>Sequence Diagrams</span></a></li>
+                  <li class="identityproviders"><a href="/identityproviders"><i></i><span>Identity Providers</span></a></li>
+                  <li class="saml-configuration"><a href="/saml-configuration"><i></i><span>SAML</span></a></li>
+                  <li class="link-accounts"><a href="/link-accounts"><i></i><span>Link Accounts</span></a></li>
+                  <li class="custom-signup"><a href="/custom-signup"><i></i><span>Custom Signup</span></a></li>
+                  <li class="mfa"><a href="/mfa"><i></i><span>Multifactor Auth (beta)</span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="col-xs-9">
+          <section class="content">
+            <!-- THIS IS WHERE THE TUTORIAL NAVIGATOR RENDERS -->
+          </section>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <ul></ul>
+    </footer>
+    <div class="container">
+      <footer class="site-footer">
+        <div class="row">
+          <div class="col-md-11">
+            <nav>
+              <ul>
+                <li><a href="https://auth0.com/about">About</a></li>
+                <li><a href="https://auth0.com/availability-trust">Availability & Trust</a></li>
+                <li><a href="https://auth0.com/terms">Terms Of Service</a></li>
+                <li><a href="https://auth0.com/privacy">Privacy</a></li>
+                <li><a href="http://chat.auth0.com">Support</a></li>
+                <li><a href="https://docs.auth0.com">Documentation</a></li>
+                <li><a href="mailto:support@auth0.com">Contact Us</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="left col-md-1"><a href="/">Auth0 &copy;</a></div>
+        </div>
+      </footer>
+    </div>
+  </body>
+  <script src="https://docs.auth0.com/js/prettify.js"></script>
+  <script src="/build/build.js"></script>
+  <script>
+    ;(function() {
+      var TutorialNavigator = require('tutorial-navigator');
+      var tutorial = new TutorialNavigator();
+      tutorial.render('section.content');
+      // That's it!
+
+      // !!!: bonus track
+      // if provided with a function,
+      // this will be called right after
+      // the tutorial fetch ends and
+      // gets interted in dom
+      tutorial.pretty(function(el) {
+        return 'function' === typeof window.prettyPrint ? prettyPrint() : null;
+      });
+    })()
+  </script>
+</html>

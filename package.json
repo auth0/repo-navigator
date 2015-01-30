@@ -1,0 +1,27 @@
+{
+  "name": "auth0-sample-navigator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Auth0's sample navigator widget",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "updatesettings": "node ./update_settings.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/auth0/sample-navigator.git"
+  },
+  "author": "Auth0",
+  "bugs": {
+    "url": "https://github.com/auth0/sample-navigator/issues"
+  },
+  "homepage": "https://github.com/auth0/sample-navigator",
+  "devDependencies": {
+    "async": "^0.9.0",
+    "component": "^1.0.2",
+    "dotenv": "^0.5.1",
+    "lodash": "^3.0.0",
+    "request": "^2.51.0"
+  }
+}

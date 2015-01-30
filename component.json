@@ -1,0 +1,21 @@
+{
+  "name": "tutorial-navigator",
+  "description": "Auth0's quickstarts",
+  "version": "0.12.3",
+  "dependencies": {
+  },
+  "paths": [
+    "lib"
+  ],
+  "local": [
+  ],
+  "templates": [
+  ],
+  "styles": [
+    "index.styl"
+  ],
+  "scripts": [
+    "index.js"
+  ],
+  "main": "index.js"
+}
