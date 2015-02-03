@@ -4,5 +4,6 @@ build
 .DS_Store
 release
 *.log
+.env
 /js/bundle.js
 /js/bundle.min.js
