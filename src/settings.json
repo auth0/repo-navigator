@@ -33,19 +33,31 @@
       "topics": [
         {
           "id": "spa-web",
-          "title": "Single Page Web Apps"
+          "title": "Single Page Web Apps",
+          "tags": [
+            "single-page-app"
+          ]
         },
         {
           "id": "web",
-          "title": "Web"
+          "title": "Web",
+          "tags": [
+            "web"
+          ]
         },
         {
           "id": "mobile",
-          "title": "Mobile (Native)"
+          "title": "Mobile (Native)",
+          "tags": [
+            "mobile"
+          ]
         },
         {
           "id": "desktop",
-          "title": "Desktop"
+          "title": "Desktop",
+          "tags": [
+            "desktop"
+          ]
         }
       ]
     },

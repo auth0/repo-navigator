@@ -9,6 +9,7 @@ var styl = require('gulp-styl');
 var inline = require('rework-inline');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
+var webserver = require('gulp-webserver');
 
 
 gulp.task('styl', function () {
@@ -54,8 +55,17 @@ var browserifyConfig = {
   debug: true
 };
 
+gulp.task('serve', function() {
+  gulp.src('./')
+    .pipe(webserver({
+      livereload: true,
+      directoryListing: true,
+      open: true
+    }));
+});
 
-gulp.task('start', ['styl-watch', 'js']);
+gulp.task('start', ['styl-watch', 'js', 'serve']);
+
 
 gulp.task('dist', ['styl'], function() {
   // TODO: debug = false
