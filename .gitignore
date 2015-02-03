@@ -3,3 +3,6 @@ components
 build
 .DS_Store
 release
+*.log
+/js/bundle.js
+/js/bundle.min.js

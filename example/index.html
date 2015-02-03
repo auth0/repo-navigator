@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="https://auth0.com/boot/img/favicon.png">
     <link href="//auth0.com/app.css" rel="stylesheet">
     <link href="//docs.auth0.com/css/docs.css" rel="stylesheet">
-    <link href="/release/build.css" rel="stylesheet">
+    <link href="/build/bundle.css" rel="stylesheet">
     <script type="text/javascript" src="//use.typekit.net/iws6ohy.js"></script>
     <script>
       try{Typekit.load();}catch(e){}
@@ -111,7 +111,7 @@
           </nav>
         </div>
         <div class="col-xs-9">
-          <section class="content">
+          <section class="content" id="react">
             <!-- THIS IS WHERE THE TUTORIAL NAVIGATOR RENDERS -->
           </section>
         </div>
@@ -142,22 +142,12 @@
     </div>
   </body>
   <script src="https://docs.auth0.com/js/prettify.js"></script>
-  <script src="/build/build.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script src="/build/bundle.js"></script>
   <script>
-    ;(function() {
-      var TutorialNavigator = require('tutorial-navigator');
-      var tutorial = new TutorialNavigator();
-      tutorial.render('section.content');
-      // That's it!
-
-      // !!!: bonus track
-      // if provided with a function,
-      // this will be called right after
-      // the tutorial fetch ends and
-      // gets interted in dom
-      tutorial.pretty(function(el) {
-        return 'function' === typeof window.prettyPrint ? prettyPrint() : null;
-      });
-    })()
+    var repoNavigator = new RepoNavigator(document.getElementById('react'));
+    $.getJSON('/src/settings.json', function(data) {
+      repoNavigator.init(data);
+    });
   </script>
 </html>

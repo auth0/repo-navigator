@@ -1,27 +1,54 @@
 {
   "name": "auth0-sample-navigator",
+  "author": "Auth0",
   "version": "0.1.0",
   "private": true,
   "description": "Auth0's sample navigator widget",
-  "main": "index.js",
+  "main": "js/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "updatesettings": "node ./update_settings.js"
+    "updatesettings": "node ./update_settings.js",
+    "start": "watchify -o js/bundle.js -v -d .",
+    "build": "NODE_ENV=production browserify . | uglifyjs -cm > js/bundle.min.js"
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/auth0/sample-navigator.git"
   },
-  "author": "Auth0",
+  "homepage": "https://github.com/auth0/sample-navigator",
   "bugs": {
     "url": "https://github.com/auth0/sample-navigator/issues"
   },
-  "homepage": "https://github.com/auth0/sample-navigator",
+  "dependencies": {
+    "flux": "^2.0.1",
+    "object-assign": "^2.0.0",
+    "react": "^0.12.2",
+    "lodash": "^3.0.0"
+  },
   "devDependencies": {
     "async": "^0.9.0",
+    "browserify": "^8.1.1",
     "component": "^1.0.2",
     "dotenv": "^0.5.1",
-    "lodash": "^3.0.0",
-    "request": "^2.51.0"
+    "envify": "^3.2.0",
+    "gulp": "^3.8.10",
+    "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^1.3.0",
+    "gulp-styl": "^1.0.2",
+    "gulp-uglify": "^1.1.0",
+    "gulp-util": "^3.0.3",
+    "reactify": "^1.0.0",
+    "request": "^2.51.0",
+    "rework-inline": "^0.2.0",
+    "uglify-js": "^2.4.16",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.3.0"
   }
 }

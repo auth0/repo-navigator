@@ -1,0 +1,8 @@
+
+
+module.exports = {
+  
+  SELECT_TOPIC: 'SELECT_TOPIC',
+  SELECT_SAMPLE: 'SELECT_SAMPLE'
+
+}
