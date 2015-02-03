@@ -16,7 +16,7 @@ var authQuery = util.format('&client_id=%s&client_secret=%s', process.env.GITHUB
 var reposUrl = 'https://api.github.com/users/%s/repos?page=%s' + authQuery; // 0: repo, 1: page number
 var metadataUrl = 'https://raw.githubusercontent.com/%s/master/metadata.json'; // 0: repo.full_name
 
-var SETTINGS_FILE = './samples.json';
+var SETTINGS_FILE = './settings.json';
 var GITHUB_ORG = 'auth0';
 
 var githubHeaders = {
@@ -91,10 +91,14 @@ var processRepository = function(repo, callback) {
 };
 
 var writeSettings = function() {
-  var output = {
-    'samples': repos
-  };
-  var json = JSON.stringify(output, null, '  ');
+  var settings = {};
+  if (fs.existsSync(SETTINGS_FILE)) {
+    settings = JSON.parse(fs.readFileSync(SETTINGS_FILE));
+    delete settings.repos;
+    fs.unlinkSync(SETTINGS_FILE);
+  }
+  settings.repos = repos;
+  var json = JSON.stringify(settings, null, '  ');
   fs.writeFileSync(SETTINGS_FILE, json);
   console.log('Sample settings successfully updated.');
 }

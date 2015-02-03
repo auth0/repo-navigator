@@ -1,21 +1,21 @@
 
-var SampleNavigatorApp = require('./components/SampleNavigatorApp.react');
+var RepoNavigatorApp = require('./components/RepoNavigatorApp.react');
 var SectionStore = require('./stores/SectionStore');
-var SampleStore = require('./stores/SampleStore');
+var RepoStore = require('./stores/RepoStore');
 var React = require('react');
 window.React = React;
 
 
 var RepoNavigator = function(element) {
   React.render(
-    <SampleNavigatorApp />,
+    <RepoNavigatorApp />,
     element
   );
 }
 
 RepoNavigator.prototype.init = function(data) {
   SectionStore.init(data.sections);
-  SampleStore.init(data.repos);
+  RepoStore.init(data.repos);
 };
 
 

@@ -20,7 +20,10 @@
         },
         {
           "id": "aspnet-mvc",
-          "title": "ASP.NET MVC"
+          "title": "ASP.NET MVC",
+          "tags": [
+            "aspnet-mvc"
+          ]
         }
       ]
     },
@@ -29,16 +32,20 @@
       "title": "By Scenario",
       "topics": [
         {
-          "id": "angularjs",
-          "title": "AngularJS"
+          "id": "spa-web",
+          "title": "Single Page Web Apps"
         },
         {
-          "id": "nodejs",
-          "title": "Node.js"
+          "id": "web",
+          "title": "Web"
         },
         {
-          "id": "aspnet-mvc",
-          "title": "ASP.NET MVC"
+          "id": "mobile",
+          "title": "Mobile (Native)"
+        },
+        {
+          "id": "desktop",
+          "title": "Desktop"
         }
       ]
     },
@@ -47,16 +54,39 @@
       "title": "By Language",
       "topics": [
         {
-          "id": "angularjs",
-          "title": "AngularJS"
+          "id": "javascript",
+          "title": "Javascript",
+          "tags": [
+            "javascript"
+          ]
         },
         {
-          "id": "nodejs",
-          "title": "Node.js"
+          "id": "csharp",
+          "title": "C#",
+          "tags": [
+            "csharp"
+          ]
         },
         {
-          "id": "aspnet-mvc",
-          "title": "ASP.NET MVC"
+          "id": "java",
+          "title": "Java",
+          "tags": [
+            "java"
+          ]
+        },
+        {
+          "id": "php",
+          "title": "PHP",
+          "tags": [
+            "php"
+          ]
+        },
+        {
+          "id": "ruby",
+          "title": "Ruby",
+          "tags": [
+            "ruby"
+          ]
         }
       ]
     }

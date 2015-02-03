@@ -7,13 +7,13 @@ var _ = require('lodash');
 
 var CHANGE_EVENT = 'change';
 
-var _samples = [];
+var _repositories = [];
 
-var SampleStore = assign({}, EventEmitter.prototype, {
+var RepoStore = assign({}, EventEmitter.prototype, {
 
 
-  init: function(samples) {
-    _samples = samples;
+  init: function(repositories) {
+    _repositories = repositories;
     this.emitChange();
   },
   /**
@@ -21,19 +21,19 @@ var SampleStore = assign({}, EventEmitter.prototype, {
    * @return {object}
    */
   getAll: function() {
-    return _samples;
+    return _repositories;
   },
 
   getByTags: function(tags) {
     if (!tags) {
       return [];
     }
-    var result = _.filter(_samples, function(sample) {
-      if (!sample.tags) {
+    var result = _.filter(_repositories, function(repo) {
+      if (!repo.tags) {
         return false;
       }
-      var union = _.union(sample.tags, tags);
-      return sample.tags.length === union.length;
+      var union = _.union(repo.tags, tags);
+      return repo.tags.length === union.length;
     });
     return result || [];
   },
@@ -61,9 +61,9 @@ var SampleStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
 
   switch(action.actionType) {
-    case AppConstants.SELECT_SAMPLE:
+    case AppConstants.SELECT_REPO:
       setSelected(action.id);
-      SampleStore.emitChange();
+      RepoStore.emitChange();
       break;
 
     default:
@@ -71,4 +71,4 @@ AppDispatcher.register(function(action) {
   }
 });
 
-module.exports = SampleStore;
+module.exports = RepoStore;

@@ -3,6 +3,6 @@
 module.exports = {
   
   SELECT_TOPIC: 'SELECT_TOPIC',
-  SELECT_SAMPLE: 'SELECT_SAMPLE'
+  SELECT_REPO: 'SELECT_REPO'
 
 }
