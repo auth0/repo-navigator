@@ -10,53 +10,89 @@ var inline = require('rework-inline');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var webserver = require('gulp-webserver');
+var minifyCSS = require('gulp-minify-css');
+var clean = require('gulp-clean');
+var through = require('through2');
+var AWS = require('aws-sdk');
+var path = require('path');
 
-
-gulp.task('styl', function () {
-    return gulp.src('src/css/app.styl')
-        .pipe(styl(inline()))
-        .pipe(rename(function(path) {
-          path.basename = "bundle"
-        }))
-        .pipe(gulp.dest('build'));
+AWS.config.update({
+  accessKeyId:  process.env.S3_KEY,
+  secretAccessKey: process.env.S3_SECRET
 });
 
-gulp.task('styl-watch', function() {
+awsBucket = process.env.S3_BUCKET;
+
+gulp.task('clean', function() {
+  return gulp.src('build')
+    .pipe(clean());
+});
+
+gulp.task('css', ['clean'], function () {
+  return gulp.src('src/css/app.styl')
+    .pipe(styl(inline()))
+    .pipe(rename(function(path) {
+      path.basename = "bundle"
+    }))
+    .pipe(gulp.dest('build'));
+});
+
+gulp.task('css-watch', function() {
   var watcher = gulp.watch('src/css/*.*', ['styl']);
   watcher.on('change', function(event) {
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
-})
+});
 
-var bundler = watchify(browserify('./src/js/app.js', watchify.args));
-// add any other browserify options or transforms here
-bundler.transform('reactify');
-bundler.transform('envify');
+gulp.task('css-minify', ['css'], function() {
+  return gulp.src('./build/bundle.css')
+    .pipe(minifyCSS())
+    .pipe(rename(function(path) {
+      path.extname = '.min.css';
+    }))
+    .pipe(gulp.dest('./build'))
+});
 
-gulp.task('js', bundle); // so you can run `gulp js` to build the file
-bundler.on('update', bundle); // on any dep update, runs the bundler
+function scripts(production, watch) {
+  var bundler, rebundle;
+  bundler = browserify('./src/js/app.js', {
+    basedir: __dirname,
+    debug: !production,
+    cache: {}, // required for watchify
+    packageCache: {}, // required for watchify
+    fullPaths: watch // required to be true only for watchify
+  });
+  if(watch) {
+    bundler = watchify(bundler)
+  }
 
-function bundle() {
-  return bundler.bundle()
-    // log errors if they happen
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('bundle.js'))
-    // optional, remove if you dont want sourcemaps
-      .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
-      .pipe(sourcemaps.write('./')) // writes .map file
-    //
-    .pipe(gulp.dest('./build'));
+  bundler.transform('reactify');
+  bundler.transform('envify');
+
+  rebundle = function() {
+    var stream = bundler.bundle();
+    stream.on('error', function() { console.log('Browserify error') });
+    stream = stream.pipe(source('bundle.js'));
+    return stream.pipe(gulp.dest('./build'));
+  };
+
+  //bundler.on('update', rebundle);
+  return rebundle();
 }
 
-
-var browserifyConfig = {
-  entries: ['./src/js/app.js'],
-  debug: true
-};
+gulp.task('js-watch', scripts.bind(null, false, true));
+gulp.task('js', ['clean'], scripts.bind(null, true, false));
+gulp.task('js-minify', ['js'], function() {
+  return gulp.src('./build/bundle.js')
+    .pipe(uglify())
+    .pipe(rename(function(path) {
+      path.extname = '.min.js'
+    }))
+    .pipe(gulp.dest('./build'));
+});
 
 gulp.task('serve', function() {
-  gulp.src('./')
+  return gulp.src('./')
     .pipe(webserver({
       livereload: true,
       directoryListing: true,
@@ -64,19 +100,57 @@ gulp.task('serve', function() {
     }));
 });
 
-gulp.task('start', ['styl-watch', 'js', 'serve']);
+gulp.task('cdn', ['package'], function() {
 
-
-gulp.task('dist', ['styl'], function() {
-  // TODO: debug = false
-  var bundle = function() {
-    return bundler
-      .bundle()
-      .pipe(source('bundle.min.js'))
-      .pipe(buffer())
-      .pipe(uglify())
-      .pipe(gulp.dest('./build'));
+  var getContentType = function(filename) {
+    var ext = path.extname(filename);
+    switch (ext) {
+      case '.js':
+        return 'application/javascript';
+      case '.css':
+        return 'text/css';
+      default:
+        throw 'Unknown file type';
+    }
   };
 
-  return bundle();
+  var upload = function() {
+    var s3bucket = new AWS.S3({params: { Bucket: awsBucket }});
+    var stream = through.obj(function(file, enc, cb) {
+
+      var self = this;
+      var params = {
+        Key: file.relative,
+        Body: file.contents,
+        ContentType: getContentType(file.relative),
+        CacheControl: 'public, max-age=300',
+        ACL: 'public-read'
+      };
+      s3bucket.upload(params, function(err, data) {
+        if (err) {
+          console.log("Error uploading data: ", err);
+        }
+        self.push(file);
+        cb();
+      });
+    });
+    return stream;
+  };
+
+
+  return gulp.src('./build/*.*')
+    .pipe(upload())
+    .pipe(rename(function(path) {
+      if (path.basename.indexOf('.min') > 0) {
+        path.basename = 'latest.min'
+      } else {
+        path.basename = 'latest'
+      }
+
+    }))
+    .pipe(upload());
 });
+
+
+gulp.task('start', ['css-watch', 'js-watch', 'serve']);
+gulp.task('package', ['css-minify', 'js-minify']);
