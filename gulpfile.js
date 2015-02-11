@@ -15,6 +15,7 @@ var clean = require('gulp-clean');
 var through = require('through2');
 var AWS = require('aws-sdk');
 var path = require('path');
+var pkg = require('./package');
 
 AWS.config.update({
   accessKeyId:  process.env.S3_KEY,
@@ -22,6 +23,7 @@ AWS.config.update({
 });
 
 awsBucket = process.env.S3_BUCKET;
+var awsPathPrefix = 'repo-browser';
 
 gulp.task('clean', function() {
   return gulp.src('build')
@@ -114,13 +116,13 @@ gulp.task('cdn', ['package'], function() {
     }
   };
 
-  var upload = function() {
+  var upload = function(folder) {
     var s3bucket = new AWS.S3({params: { Bucket: awsBucket }});
     var stream = through.obj(function(file, enc, cb) {
 
       var self = this;
       var params = {
-        Key: file.relative,
+        Key: awsPathPrefix + '/' + folder + '/' + file.relative,
         Body: file.contents,
         ContentType: getContentType(file.relative),
         CacheControl: 'public, max-age=300',
@@ -139,16 +141,8 @@ gulp.task('cdn', ['package'], function() {
 
 
   return gulp.src('./build/*.*')
-    .pipe(upload())
-    .pipe(rename(function(path) {
-      if (path.basename.indexOf('.min') > 0) {
-        path.basename = 'latest.min'
-      } else {
-        path.basename = 'latest'
-      }
-
-    }))
-    .pipe(upload());
+    .pipe(upload(pkg.version))
+    .pipe(upload('latest'));
 });
 
 
