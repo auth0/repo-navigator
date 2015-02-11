@@ -131,10 +131,11 @@ gulp.task('cdn', ['package'], function() {
         ACL: 'public-read'
       };
       s3bucket.upload(params, function(err, data) {
+        console.log
         if (err) {
           throw err;
-          console.log("Error uploading data: ", err);
         }
+        console.log(data.Location);
         self.push(file);
         cb();
       });
