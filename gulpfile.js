@@ -68,6 +68,8 @@ function scripts(production, watch) {
     bundler = watchify(bundler)
   }
 
+  // bundler.external('lodash')
+  // bundler.external('react')
   bundler.transform('reactify');
   bundler.transform('envify');
 
@@ -130,6 +132,7 @@ gulp.task('cdn', ['package'], function() {
       };
       s3bucket.upload(params, function(err, data) {
         if (err) {
+          throw err;
           console.log("Error uploading data: ", err);
         }
         self.push(file);

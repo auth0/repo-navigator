@@ -6,8 +6,6 @@
   "description": "Auth0's sample navigator widget",
   "main": "js/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "updatesettings": "node ./update_settings.js",
     "cdn": "gulp cdn"
   },
   "browserify": {
